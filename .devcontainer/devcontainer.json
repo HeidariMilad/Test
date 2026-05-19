@@ -1,7 +1,8 @@
 {
   "name": "Easy SOCKS5 Proxy",
   "build": {
-    "dockerfile": "Dockerfile"
+    "dockerfile": "Dockerfile",
+    "context": ".."
   },
   "forwardPorts": [443],
   "portsAttributes": {
@@ -11,8 +12,7 @@
       "visibility": "public"
     }
   },
-  "updateContentCommand": "go mod tidy && go build -o easy-socks5 main.go && sudo setcap 'cap_net_bind_service=+ep' ./easy-socks5",
-  "postStartCommand": "nohup ./easy-socks5 > socks5.log 2>&1 &",
+  "postStartCommand": "nohup easy-socks5 > /workspaces/Test/socks5.log 2>&1 &",
   "customizations": {
     "vscode": {
       "settings": {},

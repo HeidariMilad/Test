@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PID=$(pgrep -f easy-socks5)
+PID=$(pgrep -f "easy-socks5")
 
 if [ -z "$PID" ]; then
     echo "❌ easy-socks5 is NOT running."
