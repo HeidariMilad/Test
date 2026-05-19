@@ -3,16 +3,11 @@ FROM golang:1.22-bookworm AS builder
 
 WORKDIR /app
 
-# Copy dependency manifests
-COPY go.mod ./
-# Download dependencies
-RUN go mod download
+# Copy source files
+COPY go.mod main.go ./
 
-# Copy source code
-COPY main.go ./
-
-# Compile statically
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o easy-socks5 main.go
+# Resolve dependencies (generates go.sum) and compile statically
+RUN go mod tidy && CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o easy-socks5 main.go
 
 # Stage 2: Final devcontainer image
 FROM mcr.microsoft.com/devcontainers/base:debian
